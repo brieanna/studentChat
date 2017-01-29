@@ -2,6 +2,7 @@ package studentChat;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Student {
 	// create student in the class
@@ -14,6 +15,7 @@ public class Student {
 	private int score;
 	private String chat;
 	
+	Responses responses = new Responses();
 	
 	
 	public Student(String first, String last, int score, String chat) {
@@ -44,6 +46,13 @@ public class Student {
 			studentSet.add(stud);
 		}
 		return studentSet;
+	}
+	
+	public Student getRandomStud(Set<Student> studentSet, int rand){
+		Student stud;
+		Object[] studArray = studentSet.toArray();
+		stud = (Student) studArray[rand];	
+		return stud;
 	}
 	
 }
