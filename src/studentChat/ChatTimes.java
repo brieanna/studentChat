@@ -13,9 +13,9 @@ public class ChatTimes {
 		
 		studentSet = student.createStudentSet(student.getStudentArray());
 		// printing students out to make sure they made it into the hash
-		System.out.println(studentSet);
+		System.out.println(studentSet.toString());
 		
-		System.out.println(student.getRandomStud(studentSet, 1).responses.getResponse(17));
+		System.out.println(student.getRandomStud(studentSet, 1).responses.getHello());
 		
 	}
 

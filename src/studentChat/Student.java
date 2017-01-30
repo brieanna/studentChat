@@ -1,5 +1,8 @@
 package studentChat;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -15,7 +18,7 @@ public class Student {
 	private int score;
 	private String chat;
 	
-	Responses responses = new Responses();
+	Responses responses = new Responses(chat, chat, chat, chat, chat);
 	
 	
 	public Student(String first, String last, int score, String chat) {
@@ -53,6 +56,67 @@ public class Student {
 		Object[] studArray = studentSet.toArray();
 		stud = (Student) studArray[rand];	
 		return stud;
+	}
+
+	public String getFirst() {
+		return first;
+	}
+
+	public void setFirst(String first) {
+		this.first = first;
+	}
+
+	public String getLast() {
+		return last;
+	}
+
+	public void setLast(String last) {
+		this.last = last;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public String getChat() {
+		return chat;
+	}
+
+	public void setChat(String chat) {
+		this.chat = chat;
+	}
+	public static void sortStudents(ArrayList<Student> studentList) 
+	 {
+		    for (int i = 0; i < studentList.size(); i++)
+		    {
+		        for (int j = 0; j < studentList.size(); j++) 
+		        {
+		            Collections.sort(studentList, new Comparator<Student>(){
+						public int compare(Student s1, Student s2) {
+							Student student1 = (Student) s1;
+		                    Student student2 = (Student) s2;
+		                    int res =  student1.getLast().compareToIgnoreCase(student2.getLast());
+		                    if (res != 0)
+		                    {
+		                        return res;
+		                    }
+		                    return student1.getFirst().compareToIgnoreCase(student2.getFirst());
+						}
+		            });
+		        }
+
+		    }
+		}
+
+
+	@Override
+	public String toString() {
+		return "Student [first=" + first + ", last=" + last + ", score=" + score + ", chat=" + chat + ", responses="
+				+ responses + "]";
 	}
 	
 }
