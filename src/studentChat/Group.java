@@ -20,7 +20,7 @@ public class Group {
 		
 	public void groupChat(Student s1, Student s2){
 		studentSet = student.createStudentSet(student.getStudentArray());
-			for(int x = 0; x <= 5; x++){
+			for(int x = 0; x < 5; x++){
 				System.out.println(s1.getFirst() + " says: " + s1.getResponses()[x]);
 				System.out.println(s2.getFirst() + " says: " + s2.getResponses()[x]);
 			}
@@ -48,7 +48,7 @@ public class Group {
 		}
 	}
 		
-	
+//	want to return an array of the students in order
 	public static void sortStudents(Student s1, Student s2) 
 	 {
 		ArrayList <Student> studentList = new ArrayList<>();

@@ -9,11 +9,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class Student {
-	// create student in the class
-	// first name 
-	// last name
-	// score int?
-	// instantiate responses in this class
+
 	private String first;
 	private String last;
 	private int score;
@@ -99,36 +95,6 @@ public class Student {
 	public void setResponses(Responses responses){
 		this.responses = responses;
 	}
-
-//	public String getChat() {
-//		return chat;
-//	}
-//
-//	public void setChat(String chat) {
-//		this.chat = chat;
-//	}
-//	public static void sortStudents(ArrayList<Student> studentList) 
-//	 {
-//		    for (int i = 0; i < studentList.size(); i++)
-//		    {
-//		        for (int j = 0; j < studentList.size(); j++) 
-//		        {
-//		            Collections.sort(studentList, new Comparator<Student>(){
-//						public int compare(Student s1, Student s2) {
-//							Student student1 = (Student) s1;
-//		                    Student student2 = (Student) s2;
-//		                    int res =  student1.getLast().compareToIgnoreCase(student2.getLast());
-//		                    if (res != 0)
-//		                    {
-//		                        return res;
-//		                    }
-//		                    return student1.getFirst().compareToIgnoreCase(student2.getFirst());
-//						}
-//		            });
-//		        }
-//
-//		    }
-//		}
 
 
 	@Override
