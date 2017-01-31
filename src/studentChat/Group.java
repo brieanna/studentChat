@@ -9,10 +9,8 @@ public class Group {
 
 	}
 
-	// instantiate the responses class
-	Responses responses = new Responses("", "", "", "", "");
-	// instantiate the student class
-	Student student = new Student("", "", 0, responses);
+		Responses responses = new Responses("", "", "", "", "");
+		Student student = new Student("", "", 0, responses);
 
 	Set<Student> studentSet = new HashSet<Student>();
 
