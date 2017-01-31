@@ -169,7 +169,7 @@ public class Responses {
 		case 5:
 			return "I'm out";
 		case 6:
-			return "Exit stage right";
+			return "ttyl";
 		case 7:
 			return "Bubbye now";
 		case 8:
