@@ -25,21 +25,61 @@ public class Responses {
 		int  num = random.nextInt(10) + 1;
 		switch(num)
 		{
-			case 1: return "Hi"; //case 1 - 5 is all "Hello's"
-			case 2: return "Good Morning";
-			case 3: return "Hello";
-			case 4: return "Hola";
-			case 5:	return "Hey";
-			case 6: return "Whats up??";	//cases 6 - 15 are filler 
-			case 7:	return "Sup?";
-			case 8:	return "Howdy";
-			case 9:	return "Yo!";
-			case 10: return "Greetings";
+		case 1: 
+			return "Hola";
+		case 2:
+			return "Hi";
+		case 3:
+			return "Hello";
+		case 4:
+			return "S'up";
+		case 5:
+			return "Top of the mornin'";
+		case 6:
+			return "Greetings";
+		case 7:
+			return "Good Evening";
+		case 8:
+			return "Good Afternoon";
+		case 9:
+			return "wuz up dawg";
+		case 10:
+			return "What is up?";
 		}
 		return hello;
+		
+	}
+	
+	public void setHello(String hello) {
+		this.hello = hello;
 	}
 
 	public String getChatOne() {
+		Random random = new Random();
+		int  num = random.nextInt(10) + 1;
+		switch(num)
+		{
+		case 1:
+			return "Oh man, oh man, oh man.";
+		case 2:
+			return "I forgot";
+		case 3:
+			return "I wasted time";
+		case 4:
+			return "I'm not as think you drunk I am";
+		case 5:
+			return "Want to meet up?";
+		case 6:
+			return "You know what I mean?";
+		case 7:
+			return "Did you see that ludicrus display last night?";
+		case 8:
+			return "How are you?";
+		case 9:
+			return "What's going on?";
+		case 10:
+			return "Why is the rum gone?";
+		}
 		return chatOne;
 	}
 
@@ -48,6 +88,31 @@ public class Responses {
 	}
 
 	public String getChatTwo() {
+		Random random = new Random();
+		int  num = random.nextInt(10) + 1;
+		switch(num)
+		{
+		case 1:
+			return "How is your day?";
+		case 2:
+			return "I am super awesome!";
+		case 3:
+			return "That is why I never eat chips in bed.";
+		case 4:
+			return "When pigs fly.";
+		case 5:
+			return "I've got swine-flu";
+		case 6:
+			return "SHUT-UP!";
+		case 7:
+			return "I couldn't hear you over your ego";
+		case 8:
+			return "Babe! C'mon babe. AWW! BABE!";
+		case 9:
+			return "Come back to me Ally, come back to me Ally's sister.";
+		case 10:
+			return "Do you want to build a snowman?";
+		}
 		return chatTwo;
 	}
 
@@ -56,6 +121,31 @@ public class Responses {
 	}
 
 	public String getChatThree() {
+		Random random = new Random();
+		int  num = random.nextInt(10) + 1;
+		switch(num)
+		{
+		case 1:
+			return "Yes";
+		case 2:
+			return "No way!";
+		case 3:
+			return "How could you say such a thing?";
+		case 4:
+			return "How rude!";
+		case 5:
+			return "I just farted.";
+		case 6:
+			return "I think I am in love with you.";
+		case 7:
+			return "Will you marry me?";
+		case 8:
+			return "You bet";
+		case 9:
+			return "I'd rather not.";
+		case 10:
+			return "Purple";
+		}
 		return chatThree;
 	}
 
@@ -64,95 +154,37 @@ public class Responses {
 	}
 
 	public String getBye() {
+		Random random = new Random();
+		int  num = random.nextInt(10) + 1;
+		switch(num)
+		{
+		case 1:
+			return "Bye!";
+		case 2:
+			return "Adios";
+		case 3:
+			return "Hell-Bye";
+		case 4:
+			return "Tootles";
+		case 5:
+			return "I'm out";
+		case 6:
+			return "Exit stage right";
+		case 7:
+			return "Bubbye now";
+		case 8:
+			return "c u l8r";
+		case 9:
+			return "Peace out";
+		case 10:
+			return "Time to leave";
+		}
 		return bye;
 	}
 
 	public void setBye(String bye) {
 		this.bye = bye;
 	}
-
-	public void setHello(String hello) {
-		this.hello = hello;
-	}
-
-	// make an ordered collection of responses
-	
-//	public String getResponse(int respond){
-//		
-//		switch(respond){
-//		// 0-4 are hellos
-//		case 0: 
-//			return "Hola";
-//		case 1:
-//			return "Hi";
-//		case 2:
-//			return "Hello";
-//		case 3:
-//			return "S'up";
-//		case 4:
-//			return "Top of the mornin'";
-//		// 5-25 are random convo responses
-//		case 5:
-//			return "How is your day?";
-//		case 6:
-//			return "I am super awesome!";
-//		case 7:
-//			return "That is why I never eat chips in bed.";
-//		case 8:
-//			return "When pigs fly.";
-//		case 9:
-//			return "I've got swine-flu";
-//		case 10:
-//			return "SHUT-UP!";
-//		case 11:
-//			return "I couldn't hear you over your ego";
-//		case 12:
-//			return "Babe! C'mon babe. AWW! BABE!";
-//		case 13:
-//			return "Come back to me Ally, come back to me Ally's sister.";
-//		case 14:
-//			return "Do you want to build a snowman?";
-//		case 15:
-//			return "Yes";
-//		case 16:
-//			return "No way!";
-//		case 17:
-//			return "How could you say such a thing?";
-//		case 18:
-//			return "How rude!";
-//		case 19:
-//			return "I just farted.";
-//		case 20:
-//			return "I think I am in love with you.";
-//		case 21:
-//			return "Will you marry me?";
-//		case 22:
-//			return "You bet";
-//		case 23:
-//			return "I'd rather not.";
-//		case 24:
-//			return "You know what I mean?";
-//		case 25:
-//			return "Oh man, oh man, oh man.";
-//		// 26-30 are byes
-//		case 26:
-//			return "Bye!";
-//		case 27:
-//			return "Adios";
-//		case 28:
-//			return "Hell-Bye";
-//		case 29:
-//			return "Tootles";
-//		case 30:
-//			return "I'm out";
-//		default:
-//			break;
-//		}
-//		return "";
-//	}
-	
-	
-	// hell bye
 	
 
 }
