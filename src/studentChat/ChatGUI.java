@@ -1,5 +1,6 @@
 package studentChat;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,18 +35,18 @@ public class ChatGUI extends JFrame {
 	
 		
 		chatTextArea = new JTextArea(35,30);
-		chatTextArea.setLineWrap(true);
+//		chatTextArea.setLineWrap(true);
 		chatTextArea.setEditable(false);
 		chatScrollPane = new JScrollPane(chatTextArea);
 		chatScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		chatScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//		chatScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		replyTextArea = new JTextArea(8, 20);
-		replyTextArea.setLineWrap(true);
+//		replyTextArea.setLineWrap(true);
 		replyTextArea.setEditable(true);
 		replyScrollPane = new JScrollPane(replyTextArea);
 		replyScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		replyScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+//		replyScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		replyTextArea.addKeyListener(new KeyListener(){
 
 			@Override
@@ -58,18 +59,24 @@ public class ChatGUI extends JFrame {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				
-				if((e.getKeyCode() == KeyEvent.VK_ENTER)){
+				if((e.getKeyCode() == KeyEvent.VK_ENTER && (e.isMetaDown()))){
 					chatTextArea.setText(chatTextArea.getText() + "\n" + replyTextArea.getText());	
 		        }else{
 		        	
 		        }
+				
+//				if((e.getKeyCode() == KeyEvent.VK_ENTER && (e.isControlDown()))){
+//					chatTextArea.setText(chatTextArea.getText() + "\n" + replyTextArea.getText());	
+//		        }else{
+//		        	
+//		        }
 				
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
 				
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER && (e.isControlDown())) {
 					replyTextArea.setText("");
 		        }else{
 		        	
@@ -78,6 +85,9 @@ public class ChatGUI extends JFrame {
 		
 		sendButton = new JButton();
 		sendButton.setText("Send");
+		sendButton.setSize(5, 5);
+		sendButton.setBackground(Color.CYAN);
+		sendButton.setOpaque(true);
 		sendButton.addActionListener(new ActionListener(){
 
 			@Override
