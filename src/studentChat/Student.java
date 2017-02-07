@@ -44,7 +44,7 @@ public class Student {
 		return studentSet;
 	}
 	
-	public Student getRandomStud(Set<Student> studentSet){
+	public Student getRandomStudent(Set<Student> studentSet){
 		Random rand = new Random();
 		int  randNum = rand.nextInt(studentSet.size()-1);
 		Student stud;

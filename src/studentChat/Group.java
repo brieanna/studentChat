@@ -14,6 +14,7 @@ public class Group {
 
 	Set<Student> studentSet = new HashSet<Student>();
 
+	// groups need to be in a collection of groups
 	public void groupChat(Student s1, Student s2) {
 		studentSet = student.createStudentSet(student.getStudentArray());
 		for (int x = 0; x < 5; x++) {
@@ -24,8 +25,8 @@ public class Group {
 
 	public void beginConvo() {
 		studentSet = student.createStudentSet(student.getStudentArray());
-		Student s1 = student.getRandomStud(studentSet);
-		Student s2 = student.getRandomStud(studentSet);
+		Student s1 = student.getRandomStudent(studentSet);
+		Student s2 = student.getRandomStudent(studentSet);
 		if (!sameStudents(s1, s2)) {
 			groupChat(sortStudents(s1, s2)[0], sortStudents(s1, s2)[1]);
 		} else
@@ -34,13 +35,14 @@ public class Group {
 	}
 
 	public boolean sameStudents(Student s1, Student s2) {
-		if (s1 == s2) {
+		if (s1.equals(s2)) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	// use a collection .sort
 	public Student[] sortStudents(Student s1, Student s2) {
 		Student[] studentList = new Student [2];
 		if(s1.getScore() < s2.getScore()){
