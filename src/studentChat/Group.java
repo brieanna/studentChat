@@ -15,22 +15,28 @@ public class Group {
 	Set<Student> studentSet = new HashSet<Student>();
 
 	// groups need to be in a collection of groups
-	public void groupChat(Student s1, Student s2) {
+	public String groupChat(Student s1, Student s2) {
 		studentSet = student.createStudentSet(student.getStudentArray());
+		String chat = "";
 		for (int x = 0; x < 5; x++) {
-			System.out.println(s1.getFirst() + " " + s1.getLast() + " says: " + s1.getResponses()[x]);
-			System.out.println(s2.getFirst() + " " + s2.getLast() + " says: " + s2.getResponses()[x]);
+			chat = chat + s1.getFirst() + " " + s1.getLast() + " says: " + s1.getResponses()[x] + "\n" + 
+		s2.getFirst() + " " + s2.getLast() + " says: " + s2.getResponses()[x] + "\n";
+//			System.out.println(s1.getFirst() + " " + s1.getLast() + " says: " + s1.getResponses()[x]);
+//			System.out.println(s2.getFirst() + " " + s2.getLast() + " says: " + s2.getResponses()[x]);
 		}
+		return chat;
 	}
 
-	public void beginConvo() {
+	public String beginConvo() {
 		studentSet = student.createStudentSet(student.getStudentArray());
 		Student s1 = student.getRandomStudent(studentSet);
 		Student s2 = student.getRandomStudent(studentSet);
 		if (!sameStudents(s1, s2)) {
-			groupChat(sortStudents(s1, s2)[0], sortStudents(s1, s2)[1]);
-		} else
+			return groupChat(sortStudents(s1, s2)[0], sortStudents(s1, s2)[1]);
+		} else{
 			beginConvo();
+			return "";
+		}
 
 	}
 
