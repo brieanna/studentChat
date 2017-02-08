@@ -19,6 +19,7 @@ public class ChatGUI extends JFrame {
 	private JTextArea chatTextArea;
 	private JScrollPane replyScrollPane;
 	private JScrollPane chatScrollPane;
+	private JLabel titleLabel;
 	
 	public ChatGUI(){
 		
@@ -29,13 +30,18 @@ public class ChatGUI extends JFrame {
 		frame = new JFrame();
 		frame.setSize(400, 400);
 		panel = new JPanel();
-		GridLayout layout = new GridLayout(3,1, 10, 10);
-		panel.setLayout(layout);
-		frame.add(panel);
+//		GridLayout layout = new GridLayout(3,2, 10, 10);
+//		panel.setLayout(layout);
+//		frame.add(panel);
 		
-		String user = "User says: ";
+		String user = "You: ";
 		Group group = new Group();
 		String groupChat = group.beginConvo();
+		
+		titleLabel = new JLabel();
+		titleLabel.setText("Graphical Chat");
+		panel.add(titleLabel);
+		panel.add(titleLabel);
 		
 		chatTextArea = new JTextArea(35,30);
 		chatTextArea.setLineWrap(true);
@@ -76,6 +82,7 @@ public class ChatGUI extends JFrame {
 		sendButton.setSize(5, 5);
 		sendButton.setBackground(Color.CYAN);
 		sendButton.setOpaque(true);
+		sendButton.setBorderPainted(false);
 		sendButton.addActionListener(new ActionListener(){
 
 			@Override
@@ -86,10 +93,14 @@ public class ChatGUI extends JFrame {
 	
 		
 
-		panel.add(chatScrollPane);
-		panel.add(replyScrollPane);
-		panel.add(sendButton);
+//		panel.add(chatScrollPane);
+//		panel.add(replyScrollPane);
+//		panel.add(sendButton);
 
+		frame.add(titleLabel, BorderLayout.NORTH);
+		frame.add(chatScrollPane, BorderLayout.CENTER);
+		frame.add(replyScrollPane, BorderLayout.SOUTH);
+		frame.add(sendButton, BorderLayout.SOUTH);
 		
 		
 		frame.setVisible(true);
