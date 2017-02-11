@@ -1,7 +1,6 @@
 package studentChat;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -10,9 +9,11 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 public class ChatGUI extends JFrame {
+
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JPanel southPanel;
 	private JPanel centerPanel;
+	private JPanel southPanel;
 	private JButton sendButton;
 	private JTextArea replyTextArea;
 	private JTextArea chatTextArea;
@@ -32,16 +33,14 @@ public class ChatGUI extends JFrame {
 		centerPanel = new JPanel();
 		
 		String user = "You: ";
-		Group group = new Group();
-		String groupChat = group.beginConvo();
+		Group group = new Group(null, null);
+		String groupChat = group.groupChat(group.getRandomGroup());
 		
 		titleLabel = new JLabel();
 		titleLabel.setText("Graphical Chat");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		southPanel.add(titleLabel);
-		southPanel.add(titleLabel);
 		
-		chatTextArea = new JTextArea(35,30);
+		chatTextArea = new JTextArea(12,30);
 		chatTextArea.setLineWrap(true);
 		chatTextArea.setEditable(false);
 		chatTextArea.setText(groupChat);
