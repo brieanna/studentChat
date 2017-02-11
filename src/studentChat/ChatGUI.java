@@ -12,8 +12,7 @@ import javax.swing.*;
 public class ChatGUI extends JFrame {
 	private JFrame frame;
 	private JPanel southPanel;
-	private JPanel middlePanel;
-	private JPanel panel;
+	private JPanel centerPanel;
 	private JButton sendButton;
 	private JTextArea replyTextArea;
 	private JTextArea chatTextArea;
@@ -29,10 +28,8 @@ public class ChatGUI extends JFrame {
 		
 		frame = new JFrame();
 		frame.setSize(400, 400);
-		panel = new JPanel();
-//		GridLayout layout = new GridLayout(3,2, 10, 10);
-//		panel.setLayout(layout);
-//		frame.add(panel);
+		southPanel = new JPanel();
+		centerPanel = new JPanel();
 		
 		String user = "You: ";
 		Group group = new Group();
@@ -40,8 +37,9 @@ public class ChatGUI extends JFrame {
 		
 		titleLabel = new JLabel();
 		titleLabel.setText("Graphical Chat");
-		panel.add(titleLabel);
-		panel.add(titleLabel);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		southPanel.add(titleLabel);
+		southPanel.add(titleLabel);
 		
 		chatTextArea = new JTextArea(35,30);
 		chatTextArea.setLineWrap(true);
@@ -80,27 +78,26 @@ public class ChatGUI extends JFrame {
 		sendButton = new JButton();
 		sendButton.setText("Send");
 		sendButton.setSize(5, 5);
-		sendButton.setBackground(Color.CYAN);
+		sendButton.setBackground(new Color(120, 181, 250));
 		sendButton.setOpaque(true);
 		sendButton.setBorderPainted(false);
 		sendButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				chatTextArea.setText(chatTextArea.getText() + "\n" + replyTextArea.getText());	
+				chatTextArea.setText(chatTextArea.getText() + "\n" + user + replyTextArea.getText());	
 				replyTextArea.setText("");
 			}});
 	
+
+		southPanel.add(replyScrollPane);
+		southPanel.add(sendButton);
 		
-
-//		panel.add(chatScrollPane);
-//		panel.add(replyScrollPane);
-//		panel.add(sendButton);
-
+		centerPanel.add(chatScrollPane);
+		
 		frame.add(titleLabel, BorderLayout.NORTH);
-		frame.add(chatScrollPane, BorderLayout.CENTER);
-		frame.add(replyScrollPane, BorderLayout.SOUTH);
-		frame.add(sendButton, BorderLayout.SOUTH);
+		frame.add(centerPanel, BorderLayout.CENTER);
+		frame.add(southPanel, BorderLayout.SOUTH);
 		
 		
 		frame.setVisible(true);
