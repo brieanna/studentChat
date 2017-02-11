@@ -17,10 +17,8 @@ public class Group {
 
 	Responses responses = new Responses("", "", "", "", "");
 	Student student = new Student("", "", 0, responses);
-	Set<String> chatSet = new HashSet<String>();
 	ArrayList<Student> groupedStudents = new ArrayList<>();
 	Set<Group> groupSet = new HashSet<Group>();
-
 	Set<Student> studentSet = new HashSet<Student>();
 
 		public String groupChat(Group group) {
@@ -116,9 +114,8 @@ public class Group {
 
 	@Override
 	public String toString() {
-		return "Group [s1=" + s1 + ", s2=" + s2 + ", responses=" + responses + ", student=" + student + ", chatSet="
-				+ chatSet + ", groupedStudents=" + groupedStudents + ", groupSet=" + groupSet + ", studentSet="
-				+ studentSet + "]\n";
+		return "Group [s1=" + s1 + ", s2=" + s2 + ", responses=" + responses + ", student=" + student + ", groupedStudents=" + groupedStudents 
+				+ ", groupSet=" + groupSet + ", studentSet=" + studentSet + "]\n";
 	}
 
 }
