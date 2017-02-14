@@ -8,9 +8,8 @@ public class Responses {
 	private String chatTwo;
 	private String chatThree;
 	private String bye;
-	
-	public Responses(String hello, String chatOne, String chatTwo, String chatThree, String bye)
-	{
+
+	public Responses(String hello, String chatOne, String chatTwo, String chatThree, String bye) {
 		super();
 		this.hello = hello;
 		this.chatOne = chatOne;
@@ -19,13 +18,11 @@ public class Responses {
 		this.bye = bye;
 	}
 
-	public String getHello()
-	{
+	public String getHello() {
 		Random random = new Random();
-		int  num = random.nextInt(10) + 1;
-		switch(num)
-		{
-		case 1: 
+		int num = random.nextInt(10) + 1;
+		switch (num) {
+		case 1:
 			return "Hola";
 		case 2:
 			return "Hi";
@@ -47,18 +44,17 @@ public class Responses {
 			return "What is up?";
 		}
 		return hello;
-		
+
 	}
-	
+
 	public void setHello(String hello) {
 		this.hello = hello;
 	}
 
 	public String getChatOne() {
 		Random random = new Random();
-		int  num = random.nextInt(10) + 1;
-		switch(num)
-		{
+		int num = random.nextInt(10) + 1;
+		switch (num) {
 		case 1:
 			return "Oh man, oh man, oh man.";
 		case 2:
@@ -89,9 +85,8 @@ public class Responses {
 
 	public String getChatTwo() {
 		Random random = new Random();
-		int  num = random.nextInt(10) + 1;
-		switch(num)
-		{
+		int num = random.nextInt(10) + 1;
+		switch (num) {
 		case 1:
 			return "How is your day?";
 		case 2:
@@ -122,9 +117,8 @@ public class Responses {
 
 	public String getChatThree() {
 		Random random = new Random();
-		int  num = random.nextInt(10) + 1;
-		switch(num)
-		{
+		int num = random.nextInt(10) + 1;
+		switch (num) {
 		case 1:
 			return "Yes";
 		case 2:
@@ -155,9 +149,8 @@ public class Responses {
 
 	public String getBye() {
 		Random random = new Random();
-		int  num = random.nextInt(10) + 1;
-		switch(num)
-		{
+		int num = random.nextInt(10) + 1;
+		switch (num) {
 		case 1:
 			return "Bye!";
 		case 2:
@@ -185,6 +178,5 @@ public class Responses {
 	public void setBye(String bye) {
 		this.bye = bye;
 	}
-	
 
 }
