@@ -13,7 +13,6 @@ public class ChatGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JPanel northPanel;
 	private JPanel centerPanel;
 	private JPanel southPanel;
 	private JButton sendButton;
@@ -21,11 +20,7 @@ public class ChatGUI extends JFrame {
 	private JTextArea chatTextArea;
 	private JScrollPane replyScrollPane;
 	private JScrollPane chatScrollPane;
-	private JButton connectButton;
-	private JTextArea ipTextArea;
-	private JTextArea nameTextArea;
-	private JLabel ipLabel;
-	private JLabel nameLabel;
+	private JLabel titleLabel;
 
 	public ChatGUI() {
 
@@ -35,33 +30,16 @@ public class ChatGUI extends JFrame {
 
 		frame = new JFrame();
 		frame.setSize(400, 400);
-		northPanel = new JPanel();
 		southPanel = new JPanel();
 		centerPanel = new JPanel();
 
 		String user = "You: ";
 		Group group = new Group(null, null);
 		String groupChat = group.groupChat(group.getRandomGroup());
-		
-		ipLabel = new JLabel();
-		ipLabel.setText("Enter IP:");
-		northPanel.add(ipLabel);
-		
-		ipTextArea = new JTextArea(1,5);
-		ipTextArea.setEditable(true);
-		northPanel.add(ipTextArea);
-		
-		nameLabel = new JLabel();
-		nameLabel.setText("Enter UserName:");
-		northPanel.add(nameLabel);
-		
-		nameTextArea = new JTextArea(1,5);
-		nameTextArea.setEditable(true);
-		northPanel.add(nameTextArea);
-		
-		connectButton = new JButton();
-		connectButton.setText("Connect");
-		northPanel.add(connectButton);
+
+		titleLabel = new JLabel();
+		titleLabel.setText("Graphical Chat");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
 		chatTextArea = new JTextArea(12, 30);
 		chatTextArea.setLineWrap(true);
@@ -120,7 +98,7 @@ public class ChatGUI extends JFrame {
 
 		centerPanel.add(chatScrollPane);
 
-		frame.add(northPanel, BorderLayout.NORTH);
+		frame.add(titleLabel, BorderLayout.NORTH);
 		frame.add(centerPanel, BorderLayout.CENTER);
 		frame.add(southPanel, BorderLayout.SOUTH);
 
