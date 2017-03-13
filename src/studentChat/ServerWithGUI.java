@@ -1,5 +1,6 @@
 package studentChat;
 
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -149,10 +150,10 @@ public class ServerWithGUI extends javax.swing.JFrame {
 
 		outputPane.append("Server started. \n");
 
-		ChatGUI chatGUI = new ChatGUI();
-		chatGUI.runChatGUI();
-		ChatGUI chatGUI2 = new ChatGUI();
-		chatGUI2.runChatGUI();
+//		ChatGUI chatGUI = new ChatGUI();
+//		chatGUI.runChatGUI();
+//		ChatGUI chatGUI2 = new ChatGUI();
+//		chatGUI2.runChatGUI();
 	}
 
 	private void stopButtonActionPerformed() {
@@ -161,8 +162,15 @@ public class ServerWithGUI extends javax.swing.JFrame {
 
 	}
 
-	public static void main(String args[]) {
-		java.awt.EventQueue.invokeLater(new Runnable() {
+//	public static void main(String args[]) {
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				new ServerWithGUI().setVisible(true);
+//			}
+//		});
+//	}
+	public  void runServerWithGUI() {
+		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new ServerWithGUI().setVisible(true);
 			}

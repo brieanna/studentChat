@@ -24,13 +24,13 @@ public class ChatGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	String username, ip = "127.0.0.1";
-	int Port = 8090;
-	Socket sock;
-	BufferedReader reader;
-	PrintWriter writer;
-	ArrayList<String> userList = new ArrayList();
-	Boolean isConnected = false;
+	private String username, ip = "127.0.0.1";
+	private int Port = 8090;
+	private Socket sock;
+	private BufferedReader reader;
+	private PrintWriter writer;
+	private ArrayList<String> userList = new ArrayList<String>();
+	private Boolean isConnected = false;
 
 	private JFrame frame;
 	private JPanel northPanel;
@@ -59,7 +59,6 @@ public class ChatGUI extends JFrame {
 		southPanel = new JPanel();
 		centerPanel = new JPanel();
 
-		String user = "You: ";
 		Group group = new Group(null, null);
 		String groupChat = group.groupChat(group.getRandomGroup());
 
@@ -70,6 +69,7 @@ public class ChatGUI extends JFrame {
 		ipTextArea = new JTextArea(1, 8);
 		ipTextArea.setEditable(true);
 		northPanel.add(ipTextArea);
+	
 
 		nameLabel = new JLabel();
 		nameLabel.setText("Enter UserName:");
@@ -82,10 +82,15 @@ public class ChatGUI extends JFrame {
 		connectButton = new JButton();
 		connectButton.setText("Connect");
 		connectButton.addActionListener(new ActionListener() {
-
+			/*
+			 * TODO: need to check to see if there is a server (if there is a
+			 * server connect) need to check if the User name is unique to the
+			 * list of user names (if the user name is unique connect) if there
+			 * is not a server or the user name is not unique then start new
+			 * server (run below actionPerformed after starting ServerWithGUI)
+			 */
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO : add connection stuffs
 				if (isConnected == false) {
 					username = nameTextArea.getText();
 					nameTextArea.setEditable(false);
@@ -96,25 +101,21 @@ public class ChatGUI extends JFrame {
 						InputStreamReader streamreader = new InputStreamReader(sock.getInputStream());
 						reader = new BufferedReader(streamreader);
 						writer = new PrintWriter(sock.getOutputStream());
-						writer.println(username + ":has connected.:Connect"); // Displays
-																				// to
-																				// everyone
-																				// that
-																				// user
-																				// connected.
-						writer.flush(); // flushes the buffer
-						isConnected = true; // Used to see if the client is
-											// connected.
+						writer.println(username + ":has connected.:Connect");
+
+						writer.flush();
+						isConnected = true;
+
 					} catch (Exception ex) {
-						chatTextArea.append("DENY \n");
-						nameTextArea.setEditable(true);
-						String[] args = null;
-						ServerStart.main(args);
+						chatTextArea.append("DENY  Start Server and Connect again.\n");
+						//TODO: remove this if it goes inception
+						ServerWithGUI server = new ServerWithGUI();
+						server.runServerWithGUI();
 					}
 					Thread IncomingReader = new Thread(new IncomingReader());
 					IncomingReader.start();
 				} else if (isConnected == true) {
-					chatTextArea.append("You are already connected. \n");
+					chatTextArea.append("ACK You are already connected. \n");
 				}
 
 			}
@@ -145,8 +146,6 @@ public class ChatGUI extends JFrame {
 			public void keyPressed(KeyEvent e) {
 
 				if ((e.getKeyCode() == KeyEvent.VK_ENTER && (e.isMetaDown()))) {
-//					chatTextArea.setText(chatTextArea.getText() + "\n" + user + replyTextArea.getText());
-//					replyTextArea.setText("");
 					sendActionPerformed();
 				} else {
 
@@ -193,9 +192,9 @@ public class ChatGUI extends JFrame {
 		} else {
 			try {
 				writer.println(username + ":" + replyTextArea.getText() + ":" + "Chat");
-				writer.flush(); // flushes the buffer
+				writer.flush();
 			} catch (Exception ex) {
-				chatTextArea.append("Message was not sent. \n");
+				chatTextArea.append("Please enter IP and UserName to connect. \n");
 			}
 
 		}
