@@ -12,7 +12,7 @@ public class ServerStart {
 
 	public ServerStart() {
 		try {
-			server = new ServerSocket(8080);
+			server = new ServerSocket(8090);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);

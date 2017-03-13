@@ -3,11 +3,13 @@ package studentChat;
 public class ChatTimes {
 
 	public static void main(String[] args) {
-//		ChatGUI chatGUI = new ChatGUI();
-//		chatGUI.runChatGUI();
+//		ServerGUI serverGUI = new ServerGUI();
+//		serverGUI.runServerGUI();
 		
-		ServerGUI serverGUI = new ServerGUI();
-		serverGUI.runServerGUI();
+//		ServerStart.main(args);
+		
+		ChatGUI chatGUI = new ChatGUI();
+		chatGUI.runChatGUI();
 
 	}
 
