@@ -84,11 +84,14 @@ public class ChatGUI extends JFrame {
 		connectButton.addActionListener(new ActionListener() {
 			/*
 			 * TODO: need to check to see if there is a server (if there is a
-			 * server connect) need to check if the User name is unique to the
-			 * list of user names (if the user name is unique connect) if there
+			 * server, connect) need to check if the User name is unique to the
+			 * list of user names (if the user name is unique, connect) if there
 			 * is not a server or the user name is not unique then start new
 			 * server (run below actionPerformed after starting ServerWithGUI)
 			 */
+			
+			//TODO: need to find a way to send over the user name and have the server check the name before creating our own server. 
+			// need to make sure that my server checks for duplicate user names
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (isConnected == false) {
@@ -97,6 +100,7 @@ public class ChatGUI extends JFrame {
 					ip = ipTextArea.getText();
 
 					try {
+						// this is what checks for an existing server
 						sock = new Socket(ip, Port);
 						InputStreamReader streamreader = new InputStreamReader(sock.getInputStream());
 						reader = new BufferedReader(streamreader);
