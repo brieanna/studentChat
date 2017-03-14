@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,13 +24,11 @@ public class ChatGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private String username;
-	private InetAddress ip;
+	public static String username;
 	private int port = 8090;
 	private Socket sock;
 	private BufferedReader reader;
 	private PrintWriter writer;
-	private ArrayList<String> userList = new ArrayList<String>();
 	private Boolean isConnected = false;
 
 	private JFrame frame;
@@ -83,17 +80,7 @@ public class ChatGUI extends JFrame {
 		connectButton = new JButton();
 		connectButton.setText("Connect");
 		connectButton.addActionListener(new ActionListener() {
-			/*
-			 * TODO: need to check to see if there is a server (if there is a
-			 * server, connect) need to check if the User name is unique to the
-			 * list of user names (if the user name is unique, connect) if there
-			 * is not a server or the user name is not unique then start new
-			 * server (run below actionPerformed after starting ServerWithGUI)
-			 */
 
-			// TODO: need to find a way to send over the user name and have the
-			// server check the name before creating our own server.
-			// need to make sure that my server checks for duplicate user names
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (isConnected == false) {
@@ -102,7 +89,7 @@ public class ChatGUI extends JFrame {
 
 					try {
 						// this is what checks for an existing server
-						sock = new Socket(ip.getByName(ipTextArea.getText()), port);
+						sock = new Socket(InetAddress.getByName(ipTextArea.getText()), port);
 						InputStreamReader streamreader = new InputStreamReader(sock.getInputStream());
 						reader = new BufferedReader(streamreader);
 						writer = new PrintWriter(sock.getOutputStream());
@@ -209,13 +196,12 @@ public class ChatGUI extends JFrame {
 	public class IncomingReader implements Runnable {
 
 		public void run() {
-			String[] data;
-			String stream, done = "Done", connect = "Connect", chat = "Chat";
+			String stream;
 
 			try {
 				while (sock.isConnected() && !sock.isClosed()) {
 					stream = reader.readLine();
-					chatTextArea.append(stream);
+					chatTextArea.append(stream + "\n");
 
 				}
 			} catch (Exception ex) {
@@ -226,8 +212,8 @@ public class ChatGUI extends JFrame {
 	public void disconnect() {
 		String bye = (username + ": :Disconnect");
 		try {
-			writer.println(bye); // Sends server the disconnect signal.
-			writer.flush(); // flushes the buffer
+			writer.println(bye); 
+			writer.flush(); 
 		} catch (Exception e) {
 			chatTextArea.append("Could not send Disconnect message.\n");
 		}

@@ -44,35 +44,29 @@ public class ServerWithGUI extends javax.swing.JFrame {
 		}
 
 		public void run() {
-			String message, connect = "Connect", disconnect = "Disconnect", chat = "Chat";
-			String[] data;
+			String message;
+			String username = ChatGUI.username;
 
 			try {
 				while (sock.isConnected() && !sock.isClosed()) {
 					message = reader.readLine();
 
 					ServerTextArea.append("Received: " + message + "\n");
-					data = message.split(":");
-					for (String token : data) {
 
-						ServerTextArea.append(token + "\n");
-
-					}
-
-					if (data[2].equals(connect)) {
-						if(onlineUsers.contains(data[0])){
-							tellEveryone((data[0] + ":" + "user not unique please start new server."));
+					if (message.equals(username)) {
+						if (onlineUsers.contains(username)) {
+							tellEveryone("DENY \n");
 							runServerWithGUI();
+						} else {
+							tellEveryone(("ACK \n"));
+							addUser(username);
 						}
-						tellEveryone((data[0] + ": is connected." ));
-						addUser(data[0]);
 
 					} else
-						tellEveryone(message);
+						tellEveryone(username + ": " + message);
 
-					} 
+				}
 
-				
 			} catch (Exception ex) {
 				ServerTextArea.append("Lost connection. \n");
 				ex.printStackTrace();
@@ -145,16 +139,11 @@ public class ServerWithGUI extends javax.swing.JFrame {
 		starter.start();
 
 		ServerTextArea.append("Server started. \n");
-		
-		// TODO: delete when done chatting with yourself
-//		 ChatGUI chatGUI = new ChatGUI();
-//		 chatGUI.runChatGUI();
-		// ChatGUI chatGUI2 = new ChatGUI();
-		// chatGUI2.runChatGUI();
+
 	}
 
 	private void stopButtonActionPerformed() {
-		tellEveryone("Server:is stopping and all users will be disconnected.\n:Chat");
+		tellEveryone("Server is stopping and all users will be disconnected.\n");
 		ServerTextArea.append("Server stopping... \n");
 
 	}
@@ -168,7 +157,6 @@ public class ServerWithGUI extends javax.swing.JFrame {
 	}
 
 	public class ServerStart implements Runnable {
-		
 
 		public void run() {
 			clientOutputStreams = new ArrayList<PrintWriter>();
@@ -179,8 +167,6 @@ public class ServerWithGUI extends javax.swing.JFrame {
 
 				while (true) {
 					Socket clientSock = serverSock.accept();
-					// if the user is unique connect. if not do not connect and
-					// send DENY message
 					PrintWriter writer = new PrintWriter(clientSock.getOutputStream());
 					clientOutputStreams.add(writer);
 
@@ -196,37 +182,15 @@ public class ServerWithGUI extends javax.swing.JFrame {
 	}
 
 	public void addUser(String data) {
-		String message, add = ": :Connect", done = "Server: :Done", name = data;
+		String name = ChatGUI.username;
 		ServerTextArea.append("Before " + name + " added. \n");
-		if (onlineUsers.contains(name)) {
-// disconnect from server and start new server
-			chatGUI.disconnect();
-			} else {
+		
 			onlineUsers.add(name);
 			ServerTextArea.append("After " + name + " added. \n");
 
-			for (String token : onlineUsers) {
-
-				message = (token + add);
-				tellEveryone(message);
-			}
-			tellEveryone(done);
-		}
+				tellEveryone(name + " is online.\n");
 	}
 
-	public void removeUser(String data) {
-		String message, add = ": :Connect", done = "Server: :Done", name = data;
-		onlineUsers.remove(name);
-		String[] tempList = new String[(onlineUsers.size())];
-		onlineUsers.toArray(tempList);
-
-		for (String token : tempList) {
-
-			message = (token + add);
-			tellEveryone(message);
-		}
-		tellEveryone(done);
-	}
 
 	public void tellEveryone(String message) {
 
