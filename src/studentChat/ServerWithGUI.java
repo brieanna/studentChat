@@ -17,12 +17,14 @@ public class ServerWithGUI extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JScrollPane jScrollPane1;
-	private JTextArea outputPane;
+	private JTextArea ServerTextArea;
 	private JButton startButton;
 	private JButton stopButton;
-	
+	private int port = 8090;
+
 	ArrayList<PrintWriter> clientOutputStreams;
 	ArrayList<String> onlineUsers;
+	ChatGUI chatGUI = new ChatGUI();
 
 	public class ClientHandler implements Runnable {
 		private BufferedReader reader;
@@ -30,15 +32,14 @@ public class ServerWithGUI extends javax.swing.JFrame {
 		private PrintWriter client;
 
 		public ClientHandler(Socket clientSocket, PrintWriter user) {
-						client = user;
+			client = user;
 			try {
 				sock = clientSocket;
 				InputStreamReader isReader = new InputStreamReader(sock.getInputStream());
 				reader = new BufferedReader(isReader);
-			} 
-			catch (Exception ex) {
-				outputPane.append("Error beginning StreamReader. \n");
-			} 
+			} catch (Exception ex) {
+				ServerTextArea.append("Error beginning StreamReader. \n");
+			}
 
 		}
 
@@ -49,62 +50,64 @@ public class ServerWithGUI extends javax.swing.JFrame {
 			try {
 				while ((message = reader.readLine()) != null) {
 
-					outputPane.append("Received: " + message + "\n");
+					ServerTextArea.append("Received: " + message + "\n");
 					data = message.split(":");
 					for (String token : data) {
 
-						outputPane.append(token + "\n");
+						ServerTextArea.append(token + "\n");
 
 					}
 
 					if (data[2].equals(connect)) {
-
+						if(onlineUsers.contains(data[0])){
+							tellEveryone((data[0] + ":" + "user not unique please start new server."));
+							runServerWithGUI();
+						}
 						tellEveryone((data[0] + ":" + data[1] + ":" + chat));
-						userAdd(data[0]);
+						addUser(data[0]);
 
 					} else if (data[2].equals(disconnect)) {
 
 						tellEveryone((data[0] + ":has disconnected." + ":" + chat));
-						userRemove(data[0]);
+						removeUser(data[0]);
 
 					} else if (data[2].equals(chat)) {
 
 						tellEveryone(message);
 
 					} else {
-						outputPane.append("No Conditions were met. \n");
+						ServerTextArea.append("No Conditions were met. \n");
 					}
 
 				}
-			} 
-			catch (Exception ex) {
-				outputPane.append("Lost a connection. \n");
+			} catch (Exception ex) {
+				ServerTextArea.append("Lost connection. \n");
 				ex.printStackTrace();
 				clientOutputStreams.remove(client);
-			} 
-		} 
+			}
+		}
 	}
 
-		public ServerWithGUI() {
-			initComponents();
-		}
+	public ServerWithGUI() {
+		initComponents();
+	}
 
 	private void initComponents() {
 
 		jScrollPane1 = new JScrollPane();
-		outputPane = new JTextArea();
+		ServerTextArea = new JTextArea();
 		startButton = new JButton();
 		stopButton = new JButton();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		setTitle("House Server");
 
-		outputPane.setColumns(20);
-		outputPane.setEditable(false);
-		outputPane.setLineWrap(true);
-		outputPane.setRows(5);
-		outputPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-		jScrollPane1.setViewportView(outputPane);
+		ServerTextArea.setColumns(20);
+		ServerTextArea.setEditable(false);
+		ServerTextArea.setLineWrap(true);
+		ServerTextArea.setRows(5);
+		ServerTextArea.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+		jScrollPane1.setViewportView(ServerTextArea);
 
 		startButton.setText("Start");
 		startButton.addActionListener(new java.awt.event.ActionListener() {
@@ -144,32 +147,26 @@ public class ServerWithGUI extends javax.swing.JFrame {
 		pack();
 	}
 
-	private void startButtonActionPerformed() {
+	public void startButtonActionPerformed() {
 		Thread starter = new Thread(new ServerStart());
 		starter.start();
 
-		outputPane.append("Server started. \n");
-
-//		ChatGUI chatGUI = new ChatGUI();
-//		chatGUI.runChatGUI();
-//		ChatGUI chatGUI2 = new ChatGUI();
-//		chatGUI2.runChatGUI();
+		ServerTextArea.append("Server started. \n");
+		
+		// TODO: delete when done chatting with yourself
+		 ChatGUI chatGUI = new ChatGUI();
+		 chatGUI.runChatGUI();
+		// ChatGUI chatGUI2 = new ChatGUI();
+		// chatGUI2.runChatGUI();
 	}
 
 	private void stopButtonActionPerformed() {
 		tellEveryone("Server:is stopping and all users will be disconnected.\n:Chat");
-		outputPane.append("Server stopping... \n");
+		ServerTextArea.append("Server stopping... \n");
 
 	}
 
-//	public static void main(String args[]) {
-//		java.awt.EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				new ServerWithGUI().setVisible(true);
-//			}
-//		});
-//	}
-	public  void runServerWithGUI() {
+	public void runServerWithGUI() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new ServerWithGUI().setVisible(true);
@@ -178,7 +175,7 @@ public class ServerWithGUI extends javax.swing.JFrame {
 	}
 
 	public class ServerStart implements Runnable {
-		private int port = 8090;
+		
 
 		public void run() {
 			clientOutputStreams = new ArrayList<PrintWriter>();
@@ -189,38 +186,42 @@ public class ServerWithGUI extends javax.swing.JFrame {
 
 				while (true) {
 					Socket clientSock = serverSock.accept();
+					// if the user is unique connect. if not do not connect and
+					// send DENY message
 					PrintWriter writer = new PrintWriter(clientSock.getOutputStream());
 					clientOutputStreams.add(writer);
 
 					Thread listener = new Thread(new ClientHandler(clientSock, writer));
 					listener.start();
-					outputPane.append("Got a connection. \n");
+					ServerTextArea.append("Got a connection. \n");
 				}
+			} catch (Exception ex) {
+				ServerTextArea.append("Error making a connection. \n");
 			}
-			catch (Exception ex) {
-				outputPane.append("Error making a connection. \n");
-			} 
 
-		} 
-	}
-
-	public void userAdd(String data) {
-		String message, add = ": :Connect", done = "Server: :Done", name = data;
-		outputPane.append("Before " + name + " added. \n");
-		onlineUsers.add(name);
-		outputPane.append("After " + name + " added. \n");
-		String[] tempList = new String[(onlineUsers.size())];
-		onlineUsers.toArray(tempList);
-
-		for (String token : tempList) {
-
-			message = (token + add);
-			tellEveryone(message);
 		}
-		tellEveryone(done);
 	}
 
-	public void userRemove(String data) {
+	public void addUser(String data) {
+		String message, add = ": :Connect", done = "Server: :Done", name = data;
+		ServerTextArea.append("Before " + name + " added. \n");
+		if (onlineUsers.contains(name)) {
+// disconnect from server and start new server
+			chatGUI.disconnect();
+			} else {
+			onlineUsers.add(name);
+			ServerTextArea.append("After " + name + " added. \n");
+
+			for (String token : onlineUsers) {
+
+				message = (token + add);
+				tellEveryone(message);
+			}
+			tellEveryone(done);
+		}
+	}
+
+	public void removeUser(String data) {
 		String message, add = ": :Connect", done = "Server: :Done", name = data;
 		onlineUsers.remove(name);
 		String[] tempList = new String[(onlineUsers.size())];
@@ -242,15 +243,14 @@ public class ServerWithGUI extends javax.swing.JFrame {
 			try {
 				PrintWriter writer = (PrintWriter) it.next();
 				writer.println(message);
-				outputPane.append("Sending: " + message + "\n");
+				ServerTextArea.append("Sending: " + message + "\n");
 				writer.flush();
-				outputPane.setCaretPosition(outputPane.getDocument().getLength());
+				ServerTextArea.setCaretPosition(ServerTextArea.getDocument().getLength());
 
+			} catch (Exception ex) {
+				ServerTextArea.append("Error telling everyone. \n");
 			}
-			catch (Exception ex) {
-				outputPane.append("Error telling everyone. \n");
-			}
-		} 
-	} 
+		}
+	}
 
 }

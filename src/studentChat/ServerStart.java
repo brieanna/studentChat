@@ -58,41 +58,4 @@ public class ServerStart {
 		}
 	}
 }
-// package studentChat;
-//
-// import java.io.BufferedReader;
-// import java.io.InputStreamReader;
-// import java.io.PrintWriter;
-// import java.net.ServerSocket;
-// import java.net.Socket;
-// import java.util.ArrayList;
-//
-//
-// public class ServerStart implements Runnable {
-// private PrintWriter outputPane;
-// private ArrayList clientOutputStreams;
-// private ArrayList onlineUsers;
-//
-// public void run() {
-// clientOutputStreams = new ArrayList();
-// onlineUsers = new ArrayList();
-//
-// try {
-// ServerSocket serverSock = new ServerSocket(8090);
-//
-// while (true) {
-// Socket clientSock = serverSock.accept();
-// PrintWriter writer = new PrintWriter(clientSock.getOutputStream());
-// clientOutputStreams.add(writer);
-//
-// Thread listener = new Thread(new ClientHandler(clientSock, writer));
-// listener.start();
-// outputPane.append("Got a connection. \n");
-// }
-// }
-// catch (Exception ex) {
-// outputPane.append("Error making a connection. \n");
-// }
-//
-// }
-// }
+

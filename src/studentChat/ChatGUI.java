@@ -9,7 +9,9 @@ import java.awt.event.KeyListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -24,8 +26,9 @@ public class ChatGUI extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
-	private String username, ip = "127.0.0.1";
-	private int Port = 8090;
+	private String username;
+	private InetAddress ip;
+	private int port = 8090;
 	private Socket sock;
 	private BufferedReader reader;
 	private PrintWriter writer;
@@ -69,7 +72,6 @@ public class ChatGUI extends JFrame {
 		ipTextArea = new JTextArea(1, 8);
 		ipTextArea.setEditable(true);
 		northPanel.add(ipTextArea);
-	
 
 		nameLabel = new JLabel();
 		nameLabel.setText("Enter UserName:");
@@ -89,37 +91,35 @@ public class ChatGUI extends JFrame {
 			 * is not a server or the user name is not unique then start new
 			 * server (run below actionPerformed after starting ServerWithGUI)
 			 */
-			
-			//TODO: need to find a way to send over the user name and have the server check the name before creating our own server. 
+
+			// TODO: need to find a way to send over the user name and have the
+			// server check the name before creating our own server.
 			// need to make sure that my server checks for duplicate user names
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (isConnected == false) {
 					username = nameTextArea.getText();
 					nameTextArea.setEditable(false);
-					ip = ipTextArea.getText();
-
+				
 					try {
 						// this is what checks for an existing server
-						sock = new Socket(ip, Port);
+						sock = new Socket(ip.getByName(ipTextArea.getText()), port);
 						InputStreamReader streamreader = new InputStreamReader(sock.getInputStream());
 						reader = new BufferedReader(streamreader);
 						writer = new PrintWriter(sock.getOutputStream());
-						writer.println(username + ":has connected.:Connect");
-
+						writer.println(username + "::Connect");
 						writer.flush();
 						isConnected = true;
 
 					} catch (Exception ex) {
 						chatTextArea.append("DENY  Start Server and Connect again.\n");
-						//TODO: remove this if it goes inception
 						ServerWithGUI server = new ServerWithGUI();
 						server.runServerWithGUI();
 					}
 					Thread IncomingReader = new Thread(new IncomingReader());
 					IncomingReader.start();
 				} else if (isConnected == true) {
-					chatTextArea.append("ACK You are already connected. \n");
+					chatTextArea.append("dumbACK You are already connected. \n");
 				}
 
 			}
@@ -235,11 +235,31 @@ public class ChatGUI extends JFrame {
 						userList.clear();
 
 					}
+					
 
 				}
 			} catch (Exception ex) {
 			}
 		}
+	}
+
+	public void disconnect() {
+		String bye = (username + ": :Disconnect");
+		try {
+			writer.println(bye); // Sends server the disconnect signal.
+			writer.flush(); // flushes the buffer
+		} catch (Exception e) {
+			chatTextArea.append("Could not send Disconnect message.\n");
+		}
+
+		try {
+			chatTextArea.append("Disconnected.\n");
+			sock.close();
+		} catch (Exception ex) {
+			chatTextArea.append("Failed to disconnect. \n");
+		}
+		isConnected = false;
+		nameTextArea.setEditable(true);
 	}
 
 }
