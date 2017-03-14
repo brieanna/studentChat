@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -100,14 +99,14 @@ public class ChatGUI extends JFrame {
 				if (isConnected == false) {
 					username = nameTextArea.getText();
 					nameTextArea.setEditable(false);
-				
+
 					try {
 						// this is what checks for an existing server
 						sock = new Socket(ip.getByName(ipTextArea.getText()), port);
 						InputStreamReader streamreader = new InputStreamReader(sock.getInputStream());
 						reader = new BufferedReader(streamreader);
 						writer = new PrintWriter(sock.getOutputStream());
-						writer.println(username + "::Connect");
+						writer.println(username);
 						writer.flush();
 						isConnected = true;
 
@@ -195,7 +194,7 @@ public class ChatGUI extends JFrame {
 
 		} else {
 			try {
-				writer.println(username + ":" + replyTextArea.getText() + ":" + "Chat");
+				writer.println(replyTextArea.getText());
 				writer.flush();
 			} catch (Exception ex) {
 				chatTextArea.append("Please enter IP and UserName to connect. \n");
@@ -214,28 +213,9 @@ public class ChatGUI extends JFrame {
 			String stream, done = "Done", connect = "Connect", chat = "Chat";
 
 			try {
-				while ((stream = reader.readLine()) != null) {
-
-					data = stream.split(":");
-
-					if (data[2].equals(chat)) {
-
-						chatTextArea.append(data[0] + ": " + data[1] + "\n");
-						chatTextArea.setCaretPosition(chatTextArea.getDocument().getLength());
-
-					} else if (data[2].equals(connect)) {
-
-						chatTextArea.removeAll();
-						userList.add(data[0]);
-
-					} else if (data[2].equals(done)) { // TODO : determine if
-														// this method is even
-														// needed
-
-						userList.clear();
-
-					}
-					
+				while (sock.isConnected() && !sock.isClosed()) {
+					stream = reader.readLine();
+					chatTextArea.append(stream);
 
 				}
 			} catch (Exception ex) {

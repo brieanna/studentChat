@@ -48,7 +48,8 @@ public class ServerWithGUI extends javax.swing.JFrame {
 			String[] data;
 
 			try {
-				while ((message = reader.readLine()) != null) {
+				while (sock.isConnected() && !sock.isClosed()) {
+					message = reader.readLine();
 
 					ServerTextArea.append("Received: " + message + "\n");
 					data = message.split(":");
@@ -63,23 +64,15 @@ public class ServerWithGUI extends javax.swing.JFrame {
 							tellEveryone((data[0] + ":" + "user not unique please start new server."));
 							runServerWithGUI();
 						}
-						tellEveryone((data[0] + ":" + data[1] + ":" + chat));
+						tellEveryone((data[0] + ": is connected." ));
 						addUser(data[0]);
 
-					} else if (data[2].equals(disconnect)) {
-
-						tellEveryone((data[0] + ":has disconnected." + ":" + chat));
-						removeUser(data[0]);
-
-					} else if (data[2].equals(chat)) {
-
+					} else
 						tellEveryone(message);
 
-					} else {
-						ServerTextArea.append("No Conditions were met. \n");
-					}
+					} 
 
-				}
+				
 			} catch (Exception ex) {
 				ServerTextArea.append("Lost connection. \n");
 				ex.printStackTrace();
@@ -154,8 +147,8 @@ public class ServerWithGUI extends javax.swing.JFrame {
 		ServerTextArea.append("Server started. \n");
 		
 		// TODO: delete when done chatting with yourself
-		 ChatGUI chatGUI = new ChatGUI();
-		 chatGUI.runChatGUI();
+//		 ChatGUI chatGUI = new ChatGUI();
+//		 chatGUI.runChatGUI();
 		// ChatGUI chatGUI2 = new ChatGUI();
 		// chatGUI2.runChatGUI();
 	}
